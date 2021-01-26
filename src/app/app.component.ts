@@ -12,6 +12,7 @@ import { BaseComponent } from './shared/abstract/base.component';
     './shared/styles/color.scss',
     './shared/styles/form.scss',
     './shared/styles/button.scss',
+    './shared/styles/table.scss',
   ],
   encapsulation: ViewEncapsulation.None
 })

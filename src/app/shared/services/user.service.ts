@@ -3,13 +3,7 @@ import { Observable, of } from 'rxjs';
 import { User } from '../models/user.model';
 import { delay, tap } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
-
-const mockUser: User = {
-  password: 'parola',
-  email: 'email@gmail.com',
-  id: 'nd29178db12hdapon892',
-  name: 'Cris'
-};
+import { mockUser } from '../mocks/mock-user';
 
 @Injectable({
   providedIn: 'root'
