@@ -19,7 +19,7 @@ import { AppStaticRoutes } from '../../shared/enums/app-static-routes.enum';
 })
 export class LoginComponent extends BaseComponent implements OnInit {
   @Select(AuthState.fetchLogin)
-  private login$: Observable<User>;
+  private currentUser$: Observable<User>;
   @Select(AuthState.fetchLoginError)
   private loginError$: Observable<string>;
 
@@ -45,7 +45,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
   private watchLoginActions(): void {
     /* Success case */
-    this.login$.pipe(takeUntil(this.destroy$)).subscribe((user: User) => {
+    this.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user: User) => {
       if (user?.id) {
         this.router.navigateByUrl(AppStaticRoutes.DASHBOARD);
       }

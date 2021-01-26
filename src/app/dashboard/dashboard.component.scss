@@ -1,0 +1,30 @@
+:host {
+  height: 100%;
+  width: 100%
+}
+
+.dashboard {
+  width: 100%;
+  height: 100%;
+
+  .app-header {
+    height: 80px;
+    width: 100%;
+  }
+
+  .app-content {
+    width: 100%;
+    height: calc(100% - 80px);
+    display: flex;
+
+    .app-side-menu {
+      width: 200px;
+      height: 100%;
+    }
+
+    .app-page {
+      width: calc(100% - 200px);
+      height: 100%;
+    }
+  }
+}

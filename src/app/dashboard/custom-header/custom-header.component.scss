@@ -1,0 +1,23 @@
+:host {
+  height: 100%;
+  width: 100%
+}
+
+.custom-header {
+  width: 100%;
+  padding: 0 50px;
+  height: 100%;
+  display: flex;
+  background: var(--main-blue);
+
+  .logout-option {
+    margin: auto 0 auto auto;
+
+    p {
+      font-size: 20px;
+      color: #ffffff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+:host {
+  height: 100%;
+  width: 100%
+}
+
+.side-menu {
+  height: 100%;
+  width: 100%;
+  box-shadow: 1px 1px 1px 1px var(--blue-grey);
+
+  .menu-option {
+    width: 100%;
+    display: flex;
+    padding: 10px 20px;
+    cursor: pointer;
+
+    .icon {
+      width: 25px;
+      display: flex;
+      margin: auto 20px auto 0;
+
+      > i {
+        margin: auto;
+        font-size: 25px;
+        color: var(--main-blue);
+      }
+    }
+
+
+    > p {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--main-blue);
+    }
+
+  }
+}

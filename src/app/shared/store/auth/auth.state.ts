@@ -2,10 +2,10 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { Login } from './auth.action';
+import { Login, Logout } from './auth.action';
 
 export interface AuthStateModel {
-  currentUser: User;
+  currentUser: User | undefined;
   authError: string;
 }
 
@@ -49,7 +49,13 @@ export class AuthState {
         });
       }
     });
+  }
 
+  @Action(Logout)
+  logout({ patchState }: StateContext<AuthStateModel>) {
+    patchState({
+      currentUser: undefined
+    });
   }
 
 }
