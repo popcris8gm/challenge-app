@@ -20,3 +20,10 @@ export class DeleteContact {
   constructor(public id: string) {
   }
 }
+
+export class RefreshContacts {
+  static readonly type = '[Contact] Refresh contacts';
+
+  constructor() {
+  }
+}

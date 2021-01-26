@@ -7,6 +7,8 @@ import { Contact } from '../../shared/models/contact.model';
 import { takeUntil } from 'rxjs/operators';
 import { DeleteContact, GetAllContacts } from '../../shared/store/contact/contact.action';
 import { AddFavoriteContact, RemoveFavoriteContact } from '../../shared/store/user/user.action';
+import { Router } from '@angular/router';
+import { AppStaticRoutes } from '../../shared/enums/app-static-routes.enum';
 
 @Component({
   selector: 'contacts',
@@ -19,7 +21,7 @@ export class ContactsComponent extends BaseComponent implements OnInit {
 
   contacts: Array<Contact> = new Array<Contact>();
 
-  constructor(private store: Store) {
+  constructor(private store: Store, private router: Router) {
     super();
   }
 
@@ -50,5 +52,13 @@ export class ContactsComponent extends BaseComponent implements OnInit {
 
   delete(contact: Contact): void {
     this.store.dispatch(new DeleteContact(contact.id));
+  }
+
+  createContact(): void {
+    this.router.navigateByUrl(AppStaticRoutes.NEW_CONTACT);
+  }
+
+  edit(contact: Contact): void {
+    this.router.navigateByUrl(`${AppStaticRoutes.EDIT_CONTACT}/${contact.id}`);
   }
 }

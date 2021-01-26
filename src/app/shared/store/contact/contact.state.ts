@@ -1,10 +1,11 @@
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { Contact } from '../../models/contact.model';
-import { CreateContact, DeleteContact, GetAllContacts } from './contact.action';
+import { CreateContact, DeleteContact, GetAllContacts, RefreshContacts } from './contact.action';
 import { ContactService } from '../../services/contact.service';
 import { UserState } from '../user/user.state';
 import { User } from '../../models/user.model';
+import { RandomUUIDService } from '../../services/random-uuid.service';
 
 export interface ContactStateModel {
   contacts: Array<Contact> | undefined;
@@ -39,37 +40,65 @@ export class ContactState {
       if (user?.favorites?.length) {
         parsedContacts.forEach((contact: Contact) => {
           const parsedContact: Contact = { ...contact };
-          if (user.favorites.some((e => e === parsedContact.id))) {
-            contact.isFavorite = true;
-          }
+          contact.isFavorite = user.favorites.some((e => e === parsedContact.id)) || false;
 
           return parsedContact;
         });
+      } else {
+        parsedContacts.forEach((contact: Contact) => contact.isFavorite = false);
       }
+
       patchState({
         contacts: parsedContacts
       });
     });
   }
 
+  @Action(RefreshContacts)
+  refreshAll({ patchState }: StateContext<ContactStateModel>) {
+    const contacts: Array<Contact> = this.store.selectSnapshot(ContactState).contacts || [];
+    const existingContacts: Array<Contact> = JSON.parse(JSON.stringify(contacts));
+    const user: User = this.store.selectSnapshot(UserState).currentUser || {};
+
+    if (user?.favorites?.length) {
+      existingContacts.forEach((contact: Contact) => {
+        const parsedContact: Contact = { ...contact };
+        contact.isFavorite = user.favorites.some((e => e === parsedContact.id)) || false;
+
+        return parsedContact;
+      });
+    } else {
+      existingContacts.forEach((contact: Contact) => contact.isFavorite = false);
+    }
+
+    patchState({
+      contacts: existingContacts
+    });
+  }
+
   @Action(CreateContact)
   createContact({ patchState }: StateContext<ContactStateModel>, action: CreateContact) {
     const contacts: Array<Contact> = this.store.selectSnapshot(ContactState).contacts || [];
-    contacts.push(action.contact);
+    const existingContacts: Array<Contact> = JSON.parse(JSON.stringify(contacts));
+
+    const contactToAdd: Contact = action.contact;
+    contactToAdd.id = RandomUUIDService.getUUID(10);
+    existingContacts.push(contactToAdd);
 
     patchState({
-      contacts: { ...contacts }
+      contacts: existingContacts
     });
   }
 
   @Action(DeleteContact)
   deleteContact({ patchState }: StateContext<ContactStateModel>, action: DeleteContact) {
     const contacts: Array<Contact> = this.store.selectSnapshot(ContactState).contacts || [];
+    let existingContacts: Array<Contact> = JSON.parse(JSON.stringify(contacts));
 
-    const newContacts: Array<Contact> = contacts.filter((contact: Contact) => contact.id !== action.id).map((contact: Contact) => contact);
+    existingContacts = existingContacts.filter((contact: Contact) => contact.id !== action.id).map((contact: Contact) => contact);
 
     patchState({
-      contacts: newContacts
+      contacts: existingContacts
     });
   }
 

@@ -3,7 +3,7 @@ import { User } from '../../models/user.model';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { AddFavoriteContact, Login, Logout, RemoveFavoriteContact } from './user.action';
-import { GetAllContacts } from '../contact/contact.action';
+import { GetAllContacts, RefreshContacts } from '../contact/contact.action';
 import { mockUser } from '../../mocks/mock-user';
 
 export interface UserStateModel {
@@ -79,7 +79,7 @@ export class UserState {
           currentUser: user
         });
         setTimeout(() => {
-          this.store.dispatch(new GetAllContacts());
+          this.store.dispatch(new RefreshContacts());
         });
       }
     }
@@ -98,7 +98,7 @@ export class UserState {
       });
 
       setTimeout(() => {
-        this.store.dispatch(new GetAllContacts());
+        this.store.dispatch(new RefreshContacts());
       });
     }
   }

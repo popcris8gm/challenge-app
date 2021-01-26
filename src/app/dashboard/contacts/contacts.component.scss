@@ -8,6 +8,7 @@
   width: 100%;
   display: flex;
   padding: 50px;
+  flex-direction: column;
 }
 
 .is-favorite {
@@ -20,9 +21,42 @@
   margin: auto 0 auto auto;
 }
 
+.edit-icon {
+  cursor: pointer;
+  color: var(--grey);
+  margin: auto 0 auto auto;
+}
+
+.icon-td {
+  max-width: 50px;
+}
+
 hr {
   width: 100%;
   height: 1px;
   margin: 10px 0;
   color: #cccccc;
 }
+
+
+.actions {
+  display: flex;
+  width: 100%;
+  height: 75px;
+
+  .create-new {
+    margin: auto;
+    padding: 7px 10px;
+    border-radius: 5px;
+    display: flex;
+    background: var(--main-blue);
+    cursor: pointer;
+
+    > p {
+      font-size: 16px;
+      color: #ffffff;
+      margin: auto;
+    }
+  }
+}
+

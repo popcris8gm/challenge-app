@@ -1,4 +1,9 @@
 <div class="contacts">
+  <div class="actions">
+    <div (click)="createContact()" class="create-new">
+      <p>Create Contact</p>
+    </div>
+  </div>
   <div *ngIf="!contacts?.length" class="empty-table-message">
     There are no items yet..
   </div>
@@ -9,6 +14,7 @@
       <td>ID</td>
       <td>Email</td>
       <td>Name</td>
+      <td>Phone</td>
       <td></td>
     </tr>
     </thead>
@@ -24,10 +30,15 @@
       <td>{{contact.id}}</td>
       <td>{{contact.email}}</td>
       <td>{{contact.name}}</td>
-      <td>
+      <td>{{contact.phone | phoneNumber}}</td>
+      <td class="icon-td">
+        <i (click)="edit(contact)" class="fa fa-pen edit-icon" title="Edit"></i>
+      </td>
+      <td class="icon-td">
         <i (click)="delete(contact)" class="fa fa-trash remove-icon" title="Delete"></i>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
+<router-outlet></router-outlet>

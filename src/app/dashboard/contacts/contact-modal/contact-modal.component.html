@@ -1,0 +1,61 @@
+<div class="overlay"></div>
+<div class="modal">
+  <form [formGroup]="form">
+
+    <!-- Password Field -->
+    <div class="row">
+      <div class="field">
+        <label for="email">Email *</label>
+        <input [class.has-error]="email.dirty && email.invalid" [formControlName]="'email'"
+               autocomplete="new-password"
+               id="email" name="do-not-autocomplete" type="text">
+        <div class="errors">
+          <p *ngIf="email.dirty && email.hasError('required')">This field is required</p>
+          <p *ngIf="email.dirty && email.hasError('email')">Email format is wrong</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Name Field -->
+    <div class="row">
+      <div class="field">
+        <label for="name">Name *</label>
+        <input [class.has-error]="name.dirty && name.invalid" [formControlName]="'name'"
+               autocomplete="new-name" id="name" type="text">
+        <div class="errors">
+          <p *ngIf="name.dirty && name.hasError('required')">
+            This field is required
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone Field -->
+    <div class="row">
+      <div class="field">
+        <label for="phone">Phone *</label>
+        <input [class.has-error]="phone.dirty && phone.invalid" [formControlName]="'phone'"
+               autocomplete="new-phone" id="phone" type="text">
+        <div class="errors">
+          <p *ngIf="phone.dirty && phone.hasError('required')">
+            This field is required
+          </p>
+          <p *ngIf="phone.dirty && phone.hasError('maxlength')">
+            Max allowed length is 10 digits
+          </p>
+          <p *ngIf="phone.dirty && phone.hasError('minlength')">
+            Min allowed length is 10 digits
+          </p>
+          <p *ngIf="phone.dirty && phone.hasError('pattern')">
+            The phone number should only contain digits
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Form -->
+    <button (click)="onSubmit()" [disabled]="form.invalid" class="submit-form-button">
+      Create Contact
+    </button>
+  </form>
+</div>

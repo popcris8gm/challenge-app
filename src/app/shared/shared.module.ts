@@ -6,6 +6,7 @@ import { HttpService } from './services/http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingService } from './services/loading.service';
 import { AuthGuard } from './guards/auth.guard';
+import { PhoneNumberPipe } from './pipes/phone-number.pipe';
 
 @NgModule({
   imports: [
@@ -18,13 +19,17 @@ import { AuthGuard } from './guards/auth.guard';
     UserService,
     HttpService,
     LoadingService,
-    AuthGuard
+    AuthGuard,
+  ],
+  declarations: [
+    PhoneNumberPipe
   ],
   exports: [
     ReactiveFormsModule,
     HttpClientModule,
     CommonModule,
     FormsModule,
+    PhoneNumberPipe,
   ]
 })
 export class SharedModule {

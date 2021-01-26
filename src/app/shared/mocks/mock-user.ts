@@ -5,5 +5,5 @@ export const mockUser: User = {
   email: 'email@gmail.com',
   id: 'nd29178db12hdapon892',
   name: 'Cris',
-  favorites: ['3']
+  favorites: ['ikujdheyfk', 'ikujdhey22']
 };
