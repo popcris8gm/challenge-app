@@ -1,0 +1,47 @@
+<div class="login">
+  <div class="login-box">
+    <h3 class="login-box-title"> Login </h3>
+
+    <!-- Login Form -->
+    <form [formGroup]="form">
+
+      <!-- Password Field -->
+      <div class="row">
+        <div class="field">
+          <label for="email">Email *</label>
+          <input [class.has-error]="email.dirty && email.invalid" [formControlName]="'email'"
+                 autocomplete="new-password"
+                 id="email" name="do-not-autocomplete" type="text">
+          <div class="errors">
+            <p *ngIf="email.dirty && email.hasError('required')">This field is required</p>
+            <p *ngIf="email.dirty && email.hasError('email')">Email format is wrong</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="row">
+        <div class="field">
+          <label for="password">Password *</label>
+          <input [class.has-error]="password.dirty && password.invalid" [formControlName]="'password'"
+                 autocomplete="new-password" id="password" type="password">
+          <div class="errors">
+            <p *ngIf="password.dirty && password.hasError('required')">
+              This field is required
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Errors -->
+      <div *ngIf="errorMessage" class="form-error-message">
+        <p>{{errorMessage}}</p>
+      </div>
+
+      <!-- Submit Form -->
+      <button (click)="login()" [disabled]="form.invalid || isLoginPending">
+        Login
+      </button>
+    </form>
+  </div>
+</div>
