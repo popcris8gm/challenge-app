@@ -1,8 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Contact } from '../interfaces/contact.interface';
 
 @Pipe({ name: 'searchBy' })
 export class SearchByPipe implements PipeTransform {
-  transform(entities: Array<any>, keys: string[], searchByModel: any): Array<any> {
+  transform(entities: Array<any>, keys: string[], searchByModel: any): Array<Contact | any> {
     if (entities?.length) {
       return entities.filter((entity: any) => {
         return isValid(entity, keys, searchByModel);

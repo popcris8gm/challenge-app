@@ -21,7 +21,7 @@ export class SideMenuComponent implements OnInit {
   }
 
   private setSelectedSection(): void {
-    this.selectedSection = this.activatedRoute.firstChild.snapshot.data.section;
+    this.selectedSection = this.activatedRoute?.firstChild?.snapshot.data.section;
   }
 
   navigateTo(path: string): void {

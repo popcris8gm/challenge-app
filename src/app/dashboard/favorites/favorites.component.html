@@ -1,0 +1,43 @@
+<div class="favorites">
+  <div *ngIf="!contacts?.length" class="empty-table-message">
+    There are no items yet..
+  </div>
+  <table *ngIf="contacts?.length">
+    <thead>
+    <tr>
+      <td></td>
+      <td>ID</td>
+      <td>Email</td>
+      <td>Name</td>
+      <td>Phone</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>
+        <input (keyup)="searchByModelChanged()" [(ngModel)]="searchByModel.email" type="text">
+      </td>
+      <td>
+        <input (keyup)="searchByModelChanged()" [(ngModel)]="searchByModel.name" type="text">
+      </td>
+      <td>
+        <input (keyup)="searchByModelChanged()" [(ngModel)]="searchByModel.phone" type="text">
+      </td>
+    </tr>
+    </thead>
+    <hr>
+    <tbody>
+    <tr *ngFor="let contact of contacts | searchBy : ['email', 'name', 'phone'] : searchByModel">
+      <td>
+        <i (click)="removeFromFavorites(contact)" class="fa fa-star is-favorite"
+           title="Remove from favorites"></i>
+      </td>
+      <td>{{contact.id}}</td>
+      <td>{{contact.email}}</td>
+      <td>{{contact.name}}</td>
+      <td>{{contact.phone | phoneNumber}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<router-outlet></router-outlet>

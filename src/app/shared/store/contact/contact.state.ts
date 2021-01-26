@@ -1,12 +1,18 @@
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { Contact } from '../../interfaces/contact.interface';
-import { CreateContact, DeleteContact, GetAllContacts, GetContactById, RefreshContacts, UpdateContact } from './contact.action';
+import {
+  CreateContact,
+  DeleteContact,
+  GetAllContacts,
+  GetContactById,
+  RefreshContacts,
+  UpdateContact
+} from './contact.action';
 import { ContactService } from '../../services/contact.service';
 import { UserState } from '../user/user.state';
 import { User } from '../../interfaces/user.interface';
 import { RandomUUIDService } from '../../services/random-uuid.service';
-import { mockContacts } from '../../mocks/mock-contacts';
 
 export interface ContactStateModel {
   contacts: Array<Contact> | undefined;
@@ -14,7 +20,7 @@ export interface ContactStateModel {
 }
 
 const defaults: ContactStateModel = {
-  contacts: mockContacts,
+  contacts: undefined,
   contact: undefined,
 };
 
@@ -41,25 +47,33 @@ export class ContactState {
   /* Contact State Actions */
   @Action(GetAllContacts)
   getAll({ patchState }: StateContext<ContactStateModel>) {
-    this.contactService.getAll().subscribe((contacts: Array<Contact>) => {
-      const user: User = this.store.selectSnapshot(UserState).currentUser || {};
+    const contacts: Array<Contact> = this.store.selectSnapshot(ContactState).contacts;
+
+    if (contacts) {
       const parsedContacts: Array<Contact> = JSON.parse(JSON.stringify(contacts));
-
-      if (user?.favorites?.length) {
-        parsedContacts.forEach((contact: Contact) => {
-          const parsedContact: Contact = { ...contact };
-          contact.isFavorite = user.favorites.some((e => e === parsedContact.id)) || false;
-
-          return parsedContact;
-        });
-      } else {
-        parsedContacts.forEach((contact: Contact) => contact.isFavorite = false);
-      }
-
       patchState({
         contacts: parsedContacts
       });
-    });
+    } else {
+      this.contactService.getAll().subscribe((contacts: Array<Contact>) => {
+        const user: User = this.store.selectSnapshot(UserState).currentUser || {};
+        const parsedContacts: Array<Contact> = JSON.parse(JSON.stringify(contacts));
+
+        if (user?.favorites?.length) {
+          parsedContacts.forEach((contact: Contact) => {
+            const parsedContact: Contact = { ...contact };
+            contact.isFavorite = user.favorites.some((e => e === parsedContact.id)) || false;
+
+            return parsedContact;
+          });
+        } else {
+          parsedContacts.forEach((contact: Contact) => contact.isFavorite = false);
+        }
+        patchState({
+          contacts: parsedContacts
+        });
+      });
+    }
   }
 
   @Action(RefreshContacts)

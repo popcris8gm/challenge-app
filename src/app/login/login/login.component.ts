@@ -45,7 +45,8 @@ export class LoginComponent extends BaseComponent implements OnInit {
     /* Success case */
     this.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user: User) => {
       if (user?.id) {
-        this.router.navigateByUrl(AppStaticRoutes.DASHBOARD);
+        this.router.navigateByUrl(AppStaticRoutes.CONTACTS);
+        this.isLoginPending = false;
       }
     });
 
@@ -53,6 +54,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
     this.loginError$.pipe(takeUntil(this.destroy$)).subscribe((error: string) => {
       if (error) {
         this.errorMessage = error;
+        this.isLoginPending = false;
       }
     });
   }

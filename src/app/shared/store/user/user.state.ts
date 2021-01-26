@@ -12,7 +12,7 @@ export interface UserStateModel {
 }
 
 const defaults: UserStateModel = {
-  currentUser: mockUser,
+  currentUser: undefined,
   authError: undefined
 };
 

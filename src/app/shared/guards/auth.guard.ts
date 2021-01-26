@@ -14,6 +14,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate() {
     const user: User = this.store.selectSnapshot(UserState).currentUser;
+    console.log(user);
 
     if (user?.id) {
       return true;

@@ -1,7 +1,7 @@
 import { Contact } from '../../interfaces/contact.interface';
 
 export class GetAllContacts {
-  static readonly type = '[Contact] GetAll';
+  static readonly type = '[Contact] Get all contacts';
 
   constructor() {
   }
