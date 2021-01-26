@@ -15,6 +15,7 @@
       "app",
       "camelCase"
     ],
+    "object-literal-shorthand": false,
     "component-selector": [
       true,
       "element",
