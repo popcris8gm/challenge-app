@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './http.service';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({

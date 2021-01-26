@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NgxsModule } from '@ngxs/store';
 import { appStates } from './shared/store/app.state';
 import { environment } from '../environments/environment.prod';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { environment } from '../environments/environment.prod';
     BrowserModule,
     AppRoutingModule,
     NgxsModule.forRoot(appStates, { developmentMode: environment.production }),
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

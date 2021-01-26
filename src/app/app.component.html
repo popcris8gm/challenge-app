@@ -1,8 +1,9 @@
 <router-outlet></router-outlet>
 
-<div *ngIf="showLoading" class="over-screen-container">
+<div *ngIf="showLoading || confirmationWindowMessage" class="over-screen-container">
   <div class="overlay"></div>
   <div class="above-item">
-    <p>Loading...</p>
+    <p *ngIf="showLoading">Loading...</p>
+    <confirmation-window *ngIf="confirmationWindowMessage" [message]="confirmationWindowMessage"></confirmation-window>
   </div>
 </div>

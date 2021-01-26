@@ -1,4 +1,4 @@
-import { Contact } from '../models/contact.model';
+import { Contact } from '../interfaces/contact.interface';
 
 export const mockContacts: Array<Contact> = [{
   id: 'ikujdheyf9',

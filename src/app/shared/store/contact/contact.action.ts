@@ -1,4 +1,4 @@
-import { Contact } from '../../models/contact.model';
+import { Contact } from '../../interfaces/contact.interface';
 
 export class GetAllContacts {
   static readonly type = '[Contact] GetAll';

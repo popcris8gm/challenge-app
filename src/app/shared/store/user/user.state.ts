@@ -1,5 +1,5 @@
 import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.model';
+import { User } from '../../interfaces/user.interface';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { AddFavoriteContact, Login, Logout, RemoveFavoriteContact } from './user.action';

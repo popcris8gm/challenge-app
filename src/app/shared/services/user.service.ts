@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { User } from '../models/user.model';
+import { User } from '../interfaces/user.interface';
 import { delay, tap } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
 import { mockUser } from '../mocks/mock-user';

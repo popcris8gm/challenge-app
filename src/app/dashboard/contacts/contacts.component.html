@@ -18,10 +18,25 @@
       <td class="icon-td"></td>
       <td class="icon-td"></td>
     </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>
+        <input (keyup)="searchByModelChanged()" [(ngModel)]="searchByModel.email" type="text">
+      </td>
+      <td>
+        <input (keyup)="searchByModelChanged()" [(ngModel)]="searchByModel.name" type="text">
+      </td>
+      <td>
+        <input (keyup)="searchByModelChanged()" [(ngModel)]="searchByModel.phone" type="text">
+      </td>
+      <td class="icon-td"></td>
+      <td class="icon-td"></td>
+    </tr>
     </thead>
     <hr>
     <tbody>
-    <tr *ngFor="let contact of contacts">
+    <tr *ngFor="let contact of contacts | searchBy : ['email', 'name', 'phone'] : searchByModel">
       <td>
         <i (click)="toggleFavorite(contact)"
            [class.is-favorite]="contact.isFavorite"

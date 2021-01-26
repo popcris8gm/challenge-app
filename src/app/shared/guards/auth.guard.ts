@@ -1,6 +1,6 @@
 import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { User } from '../models/user.model';
+import { User } from '../interfaces/user.interface';
 import { Store } from '@ngxs/store';
 import { AppStaticRoutes } from '../enums/app-static-routes.enum';
 import { UserState } from '../store/user/user.state';

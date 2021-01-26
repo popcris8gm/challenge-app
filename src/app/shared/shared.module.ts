@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService } from './services/user.service';
-import { HttpService } from './services/http.service';
 import { HttpClientModule } from '@angular/common/http';
-import { LoadingService } from './services/loading.service';
 import { AuthGuard } from './guards/auth.guard';
 import { PhoneNumberPipe } from './pipes/phone-number.pipe';
+import { SearchByPipe } from './pipes/search-by.pipe';
+import { ConfirmationWindowComponent } from './components/confirmation-window/confirmation-window.component';
 
 @NgModule({
   imports: [
@@ -16,13 +15,12 @@ import { PhoneNumberPipe } from './pipes/phone-number.pipe';
     HttpClientModule,
   ],
   providers: [
-    UserService,
-    HttpService,
-    LoadingService,
     AuthGuard,
   ],
   declarations: [
-    PhoneNumberPipe
+    PhoneNumberPipe,
+    SearchByPipe,
+    ConfirmationWindowComponent
   ],
   exports: [
     ReactiveFormsModule,
@@ -30,6 +28,8 @@ import { PhoneNumberPipe } from './pipes/phone-number.pipe';
     CommonModule,
     FormsModule,
     PhoneNumberPipe,
+    SearchByPipe,
+    ConfirmationWindowComponent
   ]
 })
 export class SharedModule {

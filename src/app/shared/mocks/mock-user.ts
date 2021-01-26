@@ -1,4 +1,4 @@
-import { User } from '../models/user.model';
+import { User } from '../interfaces/user.interface';
 
 export const mockUser: User = {
   password: 'parola',

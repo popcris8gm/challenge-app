@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { delay, share, tap } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
-import { Contact } from '../models/contact.model';
+import { Contact } from '../interfaces/contact.interface';
 import { mockContacts } from '../mocks/mock-contacts';
 
 @Injectable({

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LoadingService } from './shared/services/loading.service';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from './shared/abstract/base.component';
+import { ConfirmationWindowService } from './shared/services/confirmation-window.service';
 
 @Component({
   selector: 'app-root',
@@ -18,16 +19,18 @@ import { BaseComponent } from './shared/abstract/base.component';
 })
 export class AppComponent extends BaseComponent implements OnInit {
   showLoading: boolean;
+  confirmationWindowMessage: string;
 
-  constructor(private loadingService: LoadingService) {
+  constructor(private loadingService: LoadingService, private confirmationWindowService: ConfirmationWindowService) {
     super();
   }
 
   ngOnInit(): void {
+    this.watchConfirmationWindowStatus();
     this.watchLoadingStatus();
     setInterval(() => {
       // console.log('Loading status: ', this.showLoading);
-    }, 2000);
+    }, 200);
   }
 
   private watchLoadingStatus(): void {
@@ -36,5 +39,12 @@ export class AppComponent extends BaseComponent implements OnInit {
         this.showLoading = value;
       });
     });
+  }
+
+  private watchConfirmationWindowStatus(): void {
+    this.confirmationWindowService.confirmationMessageObservable$.pipe(takeUntil(this.destroy$))
+      .subscribe((message: string) => {
+        this.confirmationWindowMessage = message;
+      });
   }
 }

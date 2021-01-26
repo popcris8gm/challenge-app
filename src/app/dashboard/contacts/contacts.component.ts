@@ -3,12 +3,13 @@ import { DeleteContact, GetAllContacts } from '../../shared/store/contact/contac
 import { AppStaticRoutes } from '../../shared/enums/app-static-routes.enum';
 import { ContactState } from '../../shared/store/contact/contact.state';
 import { BaseComponent } from '../../shared/abstract/base.component';
-import { Contact } from '../../shared/models/contact.model';
+import { Contact } from '../../shared/interfaces/contact.interface';
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ConfirmationWindowService } from '../../shared/services/confirmation-window.service';
 
 @Component({
   selector: 'contacts',
@@ -20,8 +21,9 @@ export class ContactsComponent extends BaseComponent implements OnInit {
   private contacts$: Observable<Array<Contact>>;
 
   contacts: Array<Contact> = new Array<Contact>();
+  searchByModel: Contact = {} as Contact;
 
-  constructor(private store: Store, private router: Router) {
+  constructor(private store: Store, private router: Router, private confirmationWindowService: ConfirmationWindowService) {
     super();
   }
 
@@ -42,6 +44,10 @@ export class ContactsComponent extends BaseComponent implements OnInit {
     });
   }
 
+  searchByModelChanged(): void {
+    this.searchByModel = { ...this.searchByModel };
+  }
+
   toggleFavorite(contact: Contact): void {
     if (!contact.isFavorite) {
       this.store.dispatch(new AddFavoriteContact(contact.id));
@@ -51,7 +57,13 @@ export class ContactsComponent extends BaseComponent implements OnInit {
   }
 
   delete(contact: Contact): void {
-    this.store.dispatch(new DeleteContact(contact.id));
+    this.confirmationWindowService.openConfirmationWindow(`Are you sure you want to delete this item?`);
+
+    this.confirmationWindowService.confirmationAnswerObservable$.pipe(first()).subscribe((value: boolean) => {
+      if (value) {
+        this.store.dispatch(new DeleteContact(contact.id));
+      }
+    });
   }
 
   createContact(): void {

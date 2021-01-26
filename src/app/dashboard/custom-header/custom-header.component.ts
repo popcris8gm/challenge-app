@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { User } from '../../shared/models/user.model';
+import { User } from '../../shared/interfaces/user.interface';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AppStaticRoutes } from '../../shared/enums/app-static-routes.enum';

@@ -1,10 +1,10 @@
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { Contact } from '../../models/contact.model';
+import { Contact } from '../../interfaces/contact.interface';
 import { CreateContact, DeleteContact, GetAllContacts, GetContactById, RefreshContacts, UpdateContact } from './contact.action';
 import { ContactService } from '../../services/contact.service';
 import { UserState } from '../user/user.state';
-import { User } from '../../models/user.model';
+import { User } from '../../interfaces/user.interface';
 import { RandomUUIDService } from '../../services/random-uuid.service';
 import { mockContacts } from '../../mocks/mock-contacts';
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from '../../shared/models/user.model';
+import { User } from '../../shared/interfaces/user.interface';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { BaseComponent } from '../../shared/abstract/base.component';

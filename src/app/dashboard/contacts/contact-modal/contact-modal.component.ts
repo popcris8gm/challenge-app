@@ -1,9 +1,9 @@
+import { CreateContact, GetContactById, UpdateContact } from '../../../shared/store/contact/contact.action';
 import { phoneNumberValidator } from '../../../shared/validators/phone-number.validator';
 import { AppStaticRoutes } from '../../../shared/enums/app-static-routes.enum';
-import { CreateContact, GetContactById, UpdateContact } from '../../../shared/store/contact/contact.action';
 import { ContactState } from '../../../shared/store/contact/contact.state';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Contact } from '../../../shared/models/contact.model';
+import { Contact } from '../../../shared/interfaces/contact.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
@@ -36,7 +36,7 @@ export class ContactModalComponent implements OnInit {
     if (this.isEditMode) {
       this.store.dispatch(new GetContactById(this.activatedRoute.snapshot.params.id));
 
-      this.contact$.pipe(take(3)).subscribe((contact: Contact) => {
+      this.contact$.pipe(take(1)).subscribe((contact: Contact) => {
         if (contact) {
           this.contact = { ...contact };
           this.populateForm(contact);
