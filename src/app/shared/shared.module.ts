@@ -1,16 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { LoginRoutingModule } from './login-routing.module';
-import { LoginComponent } from './login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { UserService } from './services/user.service';
+import { HttpService } from './services/http.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    LoginComponent
-  ],
   imports: [
-    BrowserModule,
-    LoginRoutingModule,
+    ReactiveFormsModule,
+    CommonModule,
+    FormsModule,
+    HttpClientModule
   ],
+  providers: [
+    UserService,
+    HttpService
+  ],
+  exports: [
+    ReactiveFormsModule,
+    HttpClientModule,
+    CommonModule,
+    FormsModule,
+  ]
 })
-export class LoginModule {
+export class SharedModule {
 }

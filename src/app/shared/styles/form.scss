@@ -3,6 +3,19 @@ form {
   flex-direction: column;
   width: 100%;
 
+  .form-error-message {
+    width: 100%;
+
+    > p {
+      width: 100%;
+      margin: auto 0;
+      font-size: 16px;
+      text-align: center;
+      font-weight: bold;
+      color: var(--error);
+    }
+  }
+
   .row {
     display: flex;
     width: 100%;
@@ -25,7 +38,7 @@ form {
         font-size: 14px;
         text-align: right;
         font-weight: bold;
-        color: var(--main-red);
+        color: var(--error);
       }
     }
   }
@@ -44,7 +57,7 @@ form {
     outline: none;
 
     &.has-error {
-      border: 1px solid var(--main-red);
+      border: 1px solid var(--error);
     }
   }
 
@@ -55,7 +68,7 @@ form {
     outline: none;
 
     &.has-error {
-      border: 1px solid var(--main-red);
+      border: 1px solid var(--error);
     }
   }
 

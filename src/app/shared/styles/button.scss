@@ -8,4 +8,7 @@ button {
   background: var(--main-blue);
   cursor: pointer;
   font-weight: bold;
+  margin: auto;
+  max-width: 250px;
+  width: 100%;
 }

@@ -14,7 +14,7 @@ import { environment } from '../environments/environment.prod';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgxsModule.forRoot(appStates, { developmentMode: !environment.production }),
+    NgxsModule.forRoot(appStates, { developmentMode: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent]
