@@ -5,18 +5,20 @@ import { UserService } from './services/user.service';
 import { HttpService } from './services/http.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoadingService } from './services/loading.service';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   imports: [
     ReactiveFormsModule,
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     UserService,
     HttpService,
-    LoadingService
+    LoadingService,
+    AuthGuard
   ],
   exports: [
     ReactiveFormsModule,
