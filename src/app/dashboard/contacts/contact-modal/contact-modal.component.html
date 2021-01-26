@@ -51,7 +51,7 @@
 
     <!-- Submit Form -->
     <button (click)="onSubmit()" [disabled]="form.invalid" class="submit-form-button">
-      Create Contact
+      {{ isEditMode ? 'Update Contact' : 'Create Contact' }}
     </button>
   </form>
 </div>

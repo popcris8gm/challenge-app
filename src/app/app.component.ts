@@ -32,11 +32,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   private watchLoadingStatus(): void {
     this.loadingService.loadingObservable.pipe(takeUntil(this.destroy$)).subscribe((value: boolean) => {
-      console.log('App Component Old Loading Status', this.showLoading);
-      console.log('App Component New Loading Status', value);
       setTimeout(() => {
-        console.log('---App Component Old Loading Status', this.showLoading);
-        console.log('---App Component New Loading Status', value);
         this.showLoading = value;
       });
     });

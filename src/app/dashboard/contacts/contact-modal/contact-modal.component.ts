@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngxs/store';
-import { CreateContact } from '../../../shared/store/contact/contact.action';
-import { Router } from '@angular/router';
-import { AppStaticRoutes } from '../../../shared/enums/app-static-routes.enum';
 import { phoneNumberValidator } from '../../../shared/validators/phone-number.validator';
+import { AppStaticRoutes } from '../../../shared/enums/app-static-routes.enum';
+import { CreateContact, GetContactById, UpdateContact } from '../../../shared/store/contact/contact.action';
+import { ContactState } from '../../../shared/store/contact/contact.state';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Contact } from '../../../shared/models/contact.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
+import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-contact-modal',
@@ -12,13 +16,33 @@ import { phoneNumberValidator } from '../../../shared/validators/phone-number.va
   styleUrls: ['./contact-modal.component.scss']
 })
 export class ContactModalComponent implements OnInit {
-  form: FormGroup;
+  @Select(ContactState.fetchContact)
+  private contact$: Observable<Contact>;
 
-  constructor(private store: Store, private router: Router) {
+  form: FormGroup;
+  isEditMode: boolean;
+  contact: Contact = {} as Contact;
+
+  constructor(private store: Store, private router: Router, private  activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.initForm();
+    this.checkEditMode();
+  }
+
+  private checkEditMode(): void {
+    this.isEditMode = this.activatedRoute.snapshot.data.isEditMode;
+    if (this.isEditMode) {
+      this.store.dispatch(new GetContactById(this.activatedRoute.snapshot.params.id));
+
+      this.contact$.pipe(take(3)).subscribe((contact: Contact) => {
+        if (contact) {
+          this.contact = { ...contact };
+          this.populateForm(contact);
+        }
+      });
+    }
   }
 
   private initForm(): void {
@@ -29,9 +53,23 @@ export class ContactModalComponent implements OnInit {
     });
   }
 
+  populateForm(contact: Contact): void {
+    this.email.setValue(contact.email);
+    this.phone.setValue(contact.phone);
+    this.name.setValue(contact.name);
+  }
+
   onSubmit(): void {
     if (this.form.valid) {
-      this.store.dispatch(new CreateContact(this.form.value));
+      this.contact.email = this.email.value;
+      this.contact.name = this.name.value;
+      this.contact.phone = this.phone.value;
+
+      if (this.isEditMode) {
+        this.store.dispatch(new UpdateContact(this.contact, this.contact.id));
+      } else {
+        this.store.dispatch(new CreateContact(this.form.value));
+      }
       this.router.navigateByUrl(AppStaticRoutes.CONTACTS);
     }
   }
@@ -51,6 +89,5 @@ export class ContactModalComponent implements OnInit {
   get phone(): FormControl {
     return this.form.controls.phone as FormControl;
   }
-
 
 }

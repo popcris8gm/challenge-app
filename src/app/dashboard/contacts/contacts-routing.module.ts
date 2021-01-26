@@ -9,11 +9,11 @@ const routes: Routes = [{
   children: [{
     path: 'new',
     component: ContactModalComponent,
-    data: { isEditMode: true }
+    data: { isEditMode: false }
   }, {
     path: 'edit/:id',
     component: ContactModalComponent,
-    data: { isEditMode: false }
+    data: { isEditMode: true }
   }]
 }];
 

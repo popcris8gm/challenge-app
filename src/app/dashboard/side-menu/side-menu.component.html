@@ -1,11 +1,13 @@
 <div class="side-menu">
-  <div (click)="navigateTo(APP_STATIC_ROUTES.CONTACTS)" class="menu-option">
+  <div (click)="navigateTo(APP_STATIC_ROUTES.CONTACTS)"
+       [class.selected]="this.SIDE_MENU_SECTIONS.CONTACTS === this.selectedSection" class="menu-option">
     <div class="icon">
       <i class="fa fa-address-book"></i>
     </div>
     <p>Contacts</p>
   </div>
-  <div (click)="navigateTo(APP_STATIC_ROUTES.FAVORITES)" class="menu-option">
+  <div (click)="navigateTo(APP_STATIC_ROUTES.FAVORITES)"
+       [class.selected]="this.SIDE_MENU_SECTIONS.FAVORITES === this.selectedSection" class="menu-option">
     <div class="icon">
       <i class="fa fa-star"></i>
     </div>

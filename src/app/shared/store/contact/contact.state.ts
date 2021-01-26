@@ -1,18 +1,21 @@
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { Contact } from '../../models/contact.model';
-import { CreateContact, DeleteContact, GetAllContacts, RefreshContacts } from './contact.action';
+import { CreateContact, DeleteContact, GetAllContacts, GetContactById, RefreshContacts, UpdateContact } from './contact.action';
 import { ContactService } from '../../services/contact.service';
 import { UserState } from '../user/user.state';
 import { User } from '../../models/user.model';
 import { RandomUUIDService } from '../../services/random-uuid.service';
+import { mockContacts } from '../../mocks/mock-contacts';
 
 export interface ContactStateModel {
   contacts: Array<Contact> | undefined;
+  contact: Contact | undefined;
 }
 
 const defaults: ContactStateModel = {
-  contacts: undefined,
+  contacts: mockContacts,
+  contact: undefined,
 };
 
 @State<ContactStateModel>({
@@ -28,6 +31,11 @@ export class ContactState {
   @Selector()
   static fetchContacts(state: ContactStateModel) {
     return state.contacts;
+  }
+
+  @Selector()
+  static fetchContact(state: ContactStateModel) {
+    return state.contact;
   }
 
   /* Contact State Actions */
@@ -90,6 +98,25 @@ export class ContactState {
     });
   }
 
+  @Action(UpdateContact)
+  updateContact({ patchState }: StateContext<ContactStateModel>, action: UpdateContact) {
+    const contacts: Array<Contact> = this.store.selectSnapshot(ContactState).contacts || [];
+    const existingContacts: Array<Contact> = JSON.parse(JSON.stringify(contacts));
+
+    existingContacts.forEach((c: Contact) => {
+      if (c.id === action.id) {
+        c.email = action.contact.email;
+        c.name = action.contact.name;
+        c.phone = action.contact.phone;
+        c.isFavorite = action.contact.isFavorite;
+      }
+    });
+
+    patchState({
+      contacts: existingContacts
+    });
+  }
+
   @Action(DeleteContact)
   deleteContact({ patchState }: StateContext<ContactStateModel>, action: DeleteContact) {
     const contacts: Array<Contact> = this.store.selectSnapshot(ContactState).contacts || [];
@@ -99,6 +126,16 @@ export class ContactState {
 
     patchState({
       contacts: existingContacts
+    });
+  }
+
+  @Action(GetContactById)
+  getContactById({ patchState }: StateContext<ContactStateModel>, action: GetContactById) {
+    const contacts: Array<Contact> = this.store.selectSnapshot(ContactState).contacts || [];
+    const contact: Contact = contacts.find((c: Contact) => c.id === action.id);
+
+    patchState({
+      contact: { ...contact }
     });
   }
 

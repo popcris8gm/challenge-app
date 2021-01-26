@@ -1,14 +1,14 @@
+import { AddFavoriteContact, RemoveFavoriteContact } from '../../shared/store/user/user.action';
+import { DeleteContact, GetAllContacts } from '../../shared/store/contact/contact.action';
+import { AppStaticRoutes } from '../../shared/enums/app-static-routes.enum';
+import { ContactState } from '../../shared/store/contact/contact.state';
+import { BaseComponent } from '../../shared/abstract/base.component';
+import { Contact } from '../../shared/models/contact.model';
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
-import { BaseComponent } from '../../shared/abstract/base.component';
-import { Observable } from 'rxjs';
-import { ContactState } from '../../shared/store/contact/contact.state';
-import { Contact } from '../../shared/models/contact.model';
 import { takeUntil } from 'rxjs/operators';
-import { DeleteContact, GetAllContacts } from '../../shared/store/contact/contact.action';
-import { AddFavoriteContact, RemoveFavoriteContact } from '../../shared/store/user/user.action';
 import { Router } from '@angular/router';
-import { AppStaticRoutes } from '../../shared/enums/app-static-routes.enum';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'contacts',

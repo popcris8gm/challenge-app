@@ -38,14 +38,13 @@ hr {
   color: #cccccc;
 }
 
-
 .actions {
   display: flex;
   width: 100%;
   height: 75px;
 
   .create-new {
-    margin: auto;
+    margin: auto auto auto 0;
     padding: 7px 10px;
     border-radius: 5px;
     display: flex;
