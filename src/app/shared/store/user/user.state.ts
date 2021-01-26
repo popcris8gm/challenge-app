@@ -2,41 +2,42 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { Login, Logout } from './auth.action';
+import { Login, Logout } from './user.action';
 
-export interface AuthStateModel {
+export interface UserStateModel {
   currentUser: User | undefined;
   authError: string;
 }
 
-const defaults: AuthStateModel = {
+const defaults: UserStateModel = {
   currentUser: undefined,
   authError: undefined
 };
 
-@State<AuthStateModel>({
+@State<UserStateModel>({
   name: 'auth',
   defaults: defaults
 })
+
 @Injectable()
-export class AuthState {
+export class UserState {
   constructor(private store: Store, private userService: UserService) {
   }
 
   /* Auth State Selectors */
   @Selector()
-  static fetchLogin(state: AuthStateModel) {
+  static fetchLogin(state: UserStateModel) {
     return state.currentUser;
   }
 
   @Selector()
-  static fetchLoginError(state: AuthStateModel) {
+  static fetchLoginError(state: UserStateModel) {
     return state.authError;
   }
 
   /* Auth State Actions */
   @Action(Login)
-  login({ patchState }: StateContext<AuthStateModel>, action: Login) {
+  login({ patchState }: StateContext<UserStateModel>, action: Login) {
     this.userService.login(action?.user?.email, action?.user?.password).subscribe((loggedInUser: User | undefined) => {
       if (loggedInUser?.id) {
         patchState({
@@ -52,7 +53,7 @@ export class AuthState {
   }
 
   @Action(Logout)
-  logout({ patchState }: StateContext<AuthStateModel>) {
+  logout({ patchState }: StateContext<UserStateModel>) {
     patchState({
       currentUser: undefined
     });

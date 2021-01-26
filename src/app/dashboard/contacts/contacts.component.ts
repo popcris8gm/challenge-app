@@ -16,15 +16,19 @@ export class ContactsComponent extends BaseComponent implements OnInit {
   @Select(ContactState.fetchContacts)
   private contacts$: Observable<Array<Contact>>;
 
-  contacts: Array<Contact>;
+  contacts: Array<Contact> = new Array<Contact>();
 
   constructor(private store: Store) {
     super();
   }
 
   ngOnInit(): void {
-    this.store.dispatch(new GetAllContacts());
+    this.fetchContacts();
     this.watchContacts();
+  }
+
+  private fetchContacts(): void {
+    this.store.dispatch(new GetAllContacts());
   }
 
   private watchContacts(): void {

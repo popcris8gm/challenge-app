@@ -3,33 +3,49 @@ import { Contact } from '../models/contact.model';
 export const mockContacts: Array<Contact> = [{
   id: '1',
   email: 'jhon@gmail.com',
-  name: 'jhon'
+  name: 'jhon',
+  isFavorite: false,
+  phone: '0739928372'
 }, {
   id: '2',
   email: 'michael@gmail.com',
-  name: 'michael'
+  name: 'michael',
+  isFavorite: false,
+  phone: '0739928372'
 }, {
   id: '3',
   email: 'jeff@gmail.com',
-  name: 'jeff'
+  name: 'jeff',
+  isFavorite: false,
+  phone: '0739928372'
 }, {
   id: '4',
   email: 'helen@gmail.com',
-  name: 'helen'
+  name: 'helen',
+  isFavorite: false,
+  phone: '0739928372'
 }, {
   id: '5',
   email: 'marcus@gmail.com',
-  name: 'marcus'
+  name: 'marcus',
+  isFavorite: false,
+  phone: '0739928372'
 }, {
   id: '6',
   email: 'diana@gmail.com',
-  name: 'diana'
+  name: 'diana',
+  isFavorite: false,
+  phone: '0739928372'
 }, {
   id: '7',
   email: 'leo@gmail.com',
-  name: 'leo'
+  name: 'leo',
+  isFavorite: false,
+  phone: '0739928372'
 }, {
   id: '8',
   email: 'suarez@gmail.com',
-  name: 'suarez'
+  name: 'suarez',
+  isFavorite: false,
+  phone: '0739928372'
 }];

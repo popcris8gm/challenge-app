@@ -1,9 +1,25 @@
 <div class="contacts">
-  <div *ngIf="!contacts || !contacts.length" class="empty-table-message">
+  <div *ngIf="!contacts?.length" class="empty-table-message">
     There are no items yet..
   </div>
   <table *ngIf="contacts?.length">
-
-
+    <thead>
+    <tr>
+      <td></td>
+      <td>ID</td>
+      <td>Email</td>
+      <td>Name</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let contact of contacts">
+      <td>
+        <i [class.is-favorite]="contact.isFavorite" class="fa fa-star"></i>
+      </td>
+      <td>{{contact.id}}</td>
+      <td>{{contact.email}}</td>
+      <td>{{contact.name}}</td>
+    </tr>
+    </tbody>
   </table>
 </div>

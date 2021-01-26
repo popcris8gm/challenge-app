@@ -29,7 +29,9 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   private watchLoadingStatus(): void {
     this.loadingService.loadingObservable.pipe(takeUntil(this.destroy$)).subscribe((value: boolean) => {
-      this.isLoading = value;
+      setTimeout(() => {
+        this.isLoading = value;
+      });
     });
   }
 }

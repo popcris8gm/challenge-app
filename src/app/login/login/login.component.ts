@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
-import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/models/user.model';
 import { Select, Store } from '@ngxs/store';
-import { Login } from '../../shared/store/auth/auth.action';
-import { AuthState } from '../../shared/store/auth/auth.state';
 import { Observable } from 'rxjs';
 import { BaseComponent } from '../../shared/abstract/base.component';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AppStaticRoutes } from '../../shared/enums/app-static-routes.enum';
+import { UserState } from '../../shared/store/user/user.state';
+import { Login } from '../../shared/store/user/user.action';
 
 @Component({
   selector: 'login',
@@ -18,9 +16,9 @@ import { AppStaticRoutes } from '../../shared/enums/app-static-routes.enum';
   styleUrls: ['login.component.scss']
 })
 export class LoginComponent extends BaseComponent implements OnInit {
-  @Select(AuthState.fetchLogin)
+  @Select(UserState.fetchLogin)
   private currentUser$: Observable<User>;
-  @Select(AuthState.fetchLoginError)
+  @Select(UserState.fetchLoginError)
   private loginError$: Observable<string>;
 
   form: FormGroup;
