@@ -2,7 +2,9 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
-import { Login, Logout } from './user.action';
+import { AddFavoriteContact, Login, Logout, RemoveFavoriteContact } from './user.action';
+import { GetAllContacts } from '../contact/contact.action';
+import { mockUser } from '../../mocks/mock-user';
 
 export interface UserStateModel {
   currentUser: User | undefined;
@@ -10,7 +12,7 @@ export interface UserStateModel {
 }
 
 const defaults: UserStateModel = {
-  currentUser: undefined,
+  currentUser: mockUser,
   authError: undefined
 };
 
@@ -57,6 +59,48 @@ export class UserState {
     patchState({
       currentUser: undefined
     });
+  }
+
+  @Action(AddFavoriteContact)
+  addFavoriteContact({ patchState }: StateContext<UserStateModel>, action: AddFavoriteContact) {
+    const storedUser: User = this.store.selectSnapshot(UserState).currentUser;
+    const user: User = JSON.parse(JSON.stringify(storedUser));
+
+    if (user) {
+      let found: boolean;
+
+      found = user.favorites.some((value) => value === action.contactId);
+
+      if (!found) {
+        user.favorites = user.favorites || [];
+        user.favorites.push(action.contactId);
+
+        patchState({
+          currentUser: user
+        });
+        setTimeout(() => {
+          this.store.dispatch(new GetAllContacts());
+        });
+      }
+    }
+  }
+
+  @Action(RemoveFavoriteContact)
+  removeFavoriteContact({ patchState }: StateContext<UserStateModel>, action: RemoveFavoriteContact) {
+    const storedUser: User = this.store.selectSnapshot(UserState).currentUser;
+    const user: User = JSON.parse(JSON.stringify(storedUser));
+
+    if (user) {
+      user.favorites = user.favorites.filter((value) => value !== action.contactId);
+
+      patchState({
+        currentUser: user
+      });
+
+      setTimeout(() => {
+        this.store.dispatch(new GetAllContacts());
+      });
+    }
   }
 
 }

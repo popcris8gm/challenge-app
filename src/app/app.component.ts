@@ -17,7 +17,7 @@ import { BaseComponent } from './shared/abstract/base.component';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent extends BaseComponent implements OnInit {
-  isLoading: boolean;
+  showLoading: boolean;
 
   constructor(private loadingService: LoadingService) {
     super();
@@ -29,9 +29,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   private watchLoadingStatus(): void {
     this.loadingService.loadingObservable.pipe(takeUntil(this.destroy$)).subscribe((value: boolean) => {
-      setTimeout(() => {
-        this.isLoading = value;
-      });
+      this.showLoading = value;
     });
   }
 }

@@ -9,16 +9,24 @@
       <td>ID</td>
       <td>Email</td>
       <td>Name</td>
+      <td></td>
     </tr>
     </thead>
+    <hr>
     <tbody>
     <tr *ngFor="let contact of contacts">
       <td>
-        <i [class.is-favorite]="contact.isFavorite" class="fa fa-star"></i>
+        <i (click)="toggleFavorite(contact)"
+           [class.is-favorite]="contact.isFavorite"
+           [title]="contact.isFavorite ? 'Remove from favorites' : 'Add to favorites'"
+           class="fa fa-star"></i>
       </td>
       <td>{{contact.id}}</td>
       <td>{{contact.email}}</td>
       <td>{{contact.name}}</td>
+      <td>
+        <i (click)="delete(contact)" class="fa fa-trash remove-icon" title="Delete"></i>
+      </td>
     </tr>
     </tbody>
   </table>

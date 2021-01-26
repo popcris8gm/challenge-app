@@ -7,7 +7,6 @@ table {
   thead {
     width: 100%;
     display: flex;
-    height: 75px;
 
     tr {
       width: 100%;
@@ -22,11 +21,13 @@ table {
         padding: 5px;
 
         &:first-child {
-          width: 100px;
+          max-width: 50px;
+          width: 100%;
         }
 
         &:nth-child(2) {
-          width: 100px;
+          max-width: 50px;
+          width: 100%;
         }
       }
     }
@@ -34,11 +35,12 @@ table {
 
   tbody {
     width: 100%;
-    height: calc(100% - 75px);
+    height: 100%;
 
     tr {
       width: 100%;
       display: flex;
+      border-bottom: 1px solid #ccc;
 
       td {
         width: 100%;
@@ -46,11 +48,13 @@ table {
         font-size: 18px;
         font-weight: bold;
         color: #575757;
-        padding: 5px;
+        padding: 10px;
         vertical-align: center;
+        text-align: left;
 
         &:first-child {
-          width: 100px;
+          max-width: 50px;
+          width: 100%;
 
           i {
             cursor: pointer;
@@ -59,7 +63,8 @@ table {
         }
 
         &:nth-child(2) {
-          width: 100px;
+          max-width: 50px;
+          width: 100%;
         }
 
         &:nth-child(4) {

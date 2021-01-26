@@ -11,5 +11,18 @@
 }
 
 .is-favorite {
-  color: yellow;
+  color: #ff8a10;
+}
+
+.remove-icon {
+  cursor: pointer;
+  color: var(--error);
+  margin: auto 0 auto auto;
+}
+
+hr {
+  width: 100%;
+  height: 1px;
+  margin: 10px 0;
+  color: #cccccc;
 }

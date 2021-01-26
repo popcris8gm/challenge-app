@@ -4,6 +4,7 @@ import { Contact } from '../../models/contact.model';
 import { CreateContact, DeleteContact, GetAllContacts } from './contact.action';
 import { ContactService } from '../../services/contact.service';
 import { UserState } from '../user/user.state';
+import { User } from '../../models/user.model';
 
 export interface ContactStateModel {
   contacts: Array<Contact> | undefined;
@@ -32,8 +33,21 @@ export class ContactState {
   @Action(GetAllContacts)
   getAll({ patchState }: StateContext<ContactStateModel>) {
     this.contactService.getAll().subscribe((contacts: Array<Contact>) => {
+      const user: User = this.store.selectSnapshot(UserState).currentUser || {};
+      const parsedContacts: Array<Contact> = JSON.parse(JSON.stringify(contacts));
+
+      if (user?.favorites?.length) {
+        parsedContacts.forEach((contact: Contact) => {
+          const parsedContact: Contact = { ...contact };
+          if (user.favorites.some((e => e === parsedContact.id))) {
+            contact.isFavorite = true;
+          }
+
+          return parsedContact;
+        });
+      }
       patchState({
-        contacts: contacts
+        contacts: parsedContacts
       });
     });
   }

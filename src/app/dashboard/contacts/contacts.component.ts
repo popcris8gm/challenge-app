@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { ContactState } from '../../shared/store/contact/contact.state';
 import { Contact } from '../../shared/models/contact.model';
 import { takeUntil } from 'rxjs/operators';
-import { GetAllContacts } from '../../shared/store/contact/contact.action';
+import { DeleteContact, GetAllContacts } from '../../shared/store/contact/contact.action';
+import { AddFavoriteContact, RemoveFavoriteContact } from '../../shared/store/user/user.action';
 
 @Component({
   selector: 'contacts',
@@ -33,8 +34,21 @@ export class ContactsComponent extends BaseComponent implements OnInit {
 
   private watchContacts(): void {
     this.contacts$.pipe(takeUntil(this.destroy$)).subscribe((contacts: Array<Contact>) => {
-      this.contacts = contacts;
+      if (contacts) {
+        this.contacts = contacts;
+      }
     });
   }
 
+  toggleFavorite(contact: Contact): void {
+    if (!contact.isFavorite) {
+      this.store.dispatch(new AddFavoriteContact(contact.id));
+    } else {
+      this.store.dispatch(new RemoveFavoriteContact(contact.id));
+    }
+  }
+
+  delete(contact: Contact): void {
+    this.store.dispatch(new DeleteContact(contact.id));
+  }
 }
