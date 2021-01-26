@@ -4,6 +4,7 @@ import { Store } from '@ngxs/store';
 import { CreateContact } from '../../../shared/store/contact/contact.action';
 import { Router } from '@angular/router';
 import { AppStaticRoutes } from '../../../shared/enums/app-static-routes.enum';
+import { phoneNumberValidator } from '../../../shared/validators/phone-number.validator';
 
 @Component({
   selector: 'app-contact-modal',
@@ -24,8 +25,7 @@ export class ContactModalComponent implements OnInit {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       name: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required, Validators.maxLength(10),
-        Validators.minLength(10), Validators.pattern(/^-?(0|[1-9]\d*)?$/)])
+      phone: new FormControl('', [Validators.required, phoneNumberValidator()])
     });
   }
 
@@ -34,6 +34,10 @@ export class ContactModalComponent implements OnInit {
       this.store.dispatch(new CreateContact(this.form.value));
       this.router.navigateByUrl(AppStaticRoutes.CONTACTS);
     }
+  }
+
+  close(): void {
+    this.router.navigateByUrl(AppStaticRoutes.CONTACTS);
   }
 
   get email(): FormControl {
@@ -47,5 +51,6 @@ export class ContactModalComponent implements OnInit {
   get phone(): FormControl {
     return this.form.controls.phone as FormControl;
   }
+
 
 }

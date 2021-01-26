@@ -12,12 +12,15 @@ export class LoadingService {
   counter = 0;
 
   increase(): void {
+    console.log('Increase from ', this.counter);
     if (++this.counter === 1) {
       this.subject.next(true);
     }
   }
 
   decrease(): void {
+    console.log('Decrease from ', this.counter);
+
     if (--this.counter === 0) {
       this.subject.next(false);
     }

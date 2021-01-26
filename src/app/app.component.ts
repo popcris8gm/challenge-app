@@ -25,11 +25,20 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.watchLoadingStatus();
+    setInterval(() => {
+      // console.log('Loading status: ', this.showLoading);
+    }, 2000);
   }
 
   private watchLoadingStatus(): void {
     this.loadingService.loadingObservable.pipe(takeUntil(this.destroy$)).subscribe((value: boolean) => {
-      this.showLoading = value;
+      console.log('App Component Old Loading Status', this.showLoading);
+      console.log('App Component New Loading Status', value);
+      setTimeout(() => {
+        console.log('---App Component Old Loading Status', this.showLoading);
+        console.log('---App Component New Loading Status', value);
+        this.showLoading = value;
+      });
     });
   }
 }

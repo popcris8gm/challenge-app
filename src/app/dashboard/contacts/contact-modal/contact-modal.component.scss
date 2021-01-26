@@ -21,13 +21,22 @@
   .modal {
     position: absolute;
     width: 600px;
-    padding: 50px;
+    padding: 100px 50px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     background: #ffffff;
     border-radius: 5px;
     display: flex;
+
+    .close-modal {
+      position: absolute;
+      right: 25px;
+      top: 25px;
+      font-size: 30px;
+      color: var(--main-blue);
+      cursor: pointer;
+    }
 
     .submit-form-button {
       margin-top: 50px;

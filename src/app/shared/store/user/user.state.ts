@@ -3,7 +3,7 @@ import { User } from '../../models/user.model';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { AddFavoriteContact, Login, Logout, RemoveFavoriteContact } from './user.action';
-import { GetAllContacts, RefreshContacts } from '../contact/contact.action';
+import { RefreshContacts } from '../contact/contact.action';
 import { mockUser } from '../../mocks/mock-user';
 
 export interface UserStateModel {
@@ -12,7 +12,7 @@ export interface UserStateModel {
 }
 
 const defaults: UserStateModel = {
-  currentUser: undefined,
+  currentUser: mockUser,
   authError: undefined
 };
 

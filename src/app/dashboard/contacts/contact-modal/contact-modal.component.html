@@ -1,5 +1,7 @@
 <div class="overlay"></div>
 <div class="modal">
+  <i (click)="close()" class="close-modal fa fa-times" title="Close"></i>
+
   <form [formGroup]="form">
 
     <!-- Password Field -->
@@ -37,17 +39,11 @@
         <input [class.has-error]="phone.dirty && phone.invalid" [formControlName]="'phone'"
                autocomplete="new-phone" id="phone" type="text">
         <div class="errors">
-          <p *ngIf="phone.dirty && phone.hasError('required')">
+          <p *ngIf="phone.dirty && phone.hasError('required') && !phone.hasError('invalidPhoneNumber')">
             This field is required
           </p>
-          <p *ngIf="phone.dirty && phone.hasError('maxlength')">
-            Max allowed length is 10 digits
-          </p>
-          <p *ngIf="phone.dirty && phone.hasError('minlength')">
-            Min allowed length is 10 digits
-          </p>
-          <p *ngIf="phone.dirty && phone.hasError('pattern')">
-            The phone number should only contain digits
+          <p *ngIf="phone.dirty && phone.hasError('invalidPhoneNumber')">
+            Phone number invalid format (Romanian phone format)
           </p>
         </div>
       </div>
