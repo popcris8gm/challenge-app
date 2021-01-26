@@ -12,7 +12,6 @@ export class ConfirmationWindowService {
   confirmationAnswerObservable$: Observable<boolean> = this.confirmationAnswerSubject.asObservable();
 
   public openConfirmationWindow(message: string): void {
-    console.log(message);
     this.confirmationMessageSubject.next(message);
   }
 
