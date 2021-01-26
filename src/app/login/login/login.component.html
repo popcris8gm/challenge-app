@@ -34,8 +34,8 @@
       </div>
 
       <!-- Form Errors -->
-      <div *ngIf="errorMessage" class="form-error-message">
-        <p>{{errorMessage}}</p>
+      <div class="form-error-message">
+        <p *ngIf="errorMessage">{{errorMessage}}</p>
       </div>
 
       <!-- Submit Form -->

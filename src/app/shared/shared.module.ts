@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from './services/user.service';
 import { HttpService } from './services/http.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoadingService } from './services/loading.service';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   providers: [
     UserService,
-    HttpService
+    HttpService,
+    LoadingService
   ],
   exports: [
     ReactiveFormsModule,

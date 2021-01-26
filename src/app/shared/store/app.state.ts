@@ -1,1 +1,3 @@
-export const appStates = [];
+import { AuthState } from './auth/auth.state';
+
+export const appStates = [AuthState];

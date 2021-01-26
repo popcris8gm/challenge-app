@@ -1,14 +1,17 @@
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
-import { State, Store } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { Injectable } from '@angular/core';
+import { Login } from './auth.action';
 
 export interface AuthStateModel {
   currentUser: User;
+  authError: string;
 }
 
 const defaults: AuthStateModel = {
-  currentUser: undefined
+  currentUser: undefined,
+  authError: undefined
 };
 
 @State<AuthStateModel>({
@@ -18,6 +21,35 @@ const defaults: AuthStateModel = {
 @Injectable()
 export class AuthState {
   constructor(private store: Store, private userService: UserService) {
+  }
+
+  /* Auth State Selectors */
+  @Selector()
+  static fetchLogin(state: AuthStateModel) {
+    return state.currentUser;
+  }
+
+  @Selector()
+  static fetchLoginError(state: AuthStateModel) {
+    return state.authError;
+  }
+
+  /* Auth State Actions */
+  @Action(Login)
+  login({ patchState }: StateContext<AuthStateModel>, action: Login) {
+    this.userService.login(action?.user?.email, action?.user?.password).subscribe((loggedInUser: User | undefined) => {
+      if (loggedInUser?.id) {
+        patchState({
+          currentUser: loggedInUser
+        });
+      } else {
+        patchState({
+          currentUser: undefined,
+          authError: 'Invalid Credentials'
+        });
+      }
+    });
+
   }
 
 }

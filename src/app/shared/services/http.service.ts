@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
+/* I implemented this service because normally this would be used for real requests,
+but for this demo I will skip using it and use some mock responses. And, we would also have here integrated the loading service */
+
 @Injectable({
   providedIn: 'root'
 })

@@ -2,22 +2,38 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { UserService } from '../../shared/services/user.service';
+import { User } from '../../shared/models/user.model';
+import { Select, Store } from '@ngxs/store';
+import { Login } from '../../shared/store/auth/auth.action';
+import { AuthState } from '../../shared/store/auth/auth.state';
+import { Observable } from 'rxjs';
+import { BaseComponent } from '../../shared/abstract/base.component';
+import { takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { AppStaticRoutes } from '../../shared/enums/app-static-routes.enum';
 
 @Component({
   selector: 'login',
   templateUrl: 'login.component.html',
   styleUrls: ['login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends BaseComponent implements OnInit {
+  @Select(AuthState.fetchLogin)
+  private login$: Observable<User>;
+  @Select(AuthState.fetchLoginError)
+  private loginError$: Observable<string>;
+
   form: FormGroup;
   errorMessage: string;
   isLoginPending: boolean;
 
-  constructor(private userService: UserService) {
+  constructor(private store: Store, private router: Router) {
+    super();
   }
 
   ngOnInit(): void {
     this.initForm();
+    this.watchLoginActions();
   }
 
   private initForm(): void {
@@ -27,15 +43,26 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  private watchLoginActions(): void {
+    /* Success case */
+    this.login$.pipe(takeUntil(this.destroy$)).subscribe((user: User) => {
+      if (user?.id) {
+        this.router.navigateByUrl(AppStaticRoutes.DASHBOARD);
+      }
+    });
+
+    /* Error case */
+    this.loginError$.pipe(takeUntil(this.destroy$)).subscribe((error: string) => {
+      if (error) {
+        this.errorMessage = error;
+      }
+    });
+  }
+
   login(): void {
     if (this.form.valid && !this.isLoginPending) {
       this.isLoginPending = true;
-      this.userService.login(this.email.value, this.password.value).subscribe((data) => {
-        this.isLoginPending = false;
-
-      }, () => {
-        this.isLoginPending = false;
-      });
+      this.store.dispatch(new Login(this.form.value));
     }
   }
 

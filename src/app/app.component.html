@@ -1,1 +1,8 @@
 <router-outlet></router-outlet>
+
+<div *ngIf="isLoading" class="over-screen-container">
+  <div class="overlay"></div>
+  <div class="above-item">
+    <p>Loading...</p>
+  </div>
+</div>
